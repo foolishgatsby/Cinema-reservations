@@ -1,10 +1,14 @@
 @font-face {
     font-family: 'fontGame';
-    src: url('../font/Pony.ttf');
+    src: url('../assets/fonts/Pony.ttf');
 }
 
 .bookingMovie{
     font-family: 'fontGame';
+    background-image: url('../assets/img/bgmovie.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 

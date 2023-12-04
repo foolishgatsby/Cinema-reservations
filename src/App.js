@@ -1,10 +1,11 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import Reservations from './Components/Reservations';
 
 function App() {
   return (
     <div className="App">
-      Hello World!
+      <Reservations />
     </div>
   );
 }
