@@ -6,7 +6,7 @@ export default class SeatsRows extends Component {
 
     renderSeats = () => {
         return Data.map((row, index) => {
-            return <div key={index} className='ms-4' >
+            return <div key={index} className='ms-4'>
                 <Seats rowNum={row} number={index} />
             </div>
         })

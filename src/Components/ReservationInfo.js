@@ -1,6 +1,43 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { cancelSeatAction } from '../redux/actions/BookingTicketActions'
 
-export default class ReservationInfo extends Component {
+class ReservationInfo extends Component {
+
+    renderReservationInfo = () => {
+        return this.props.lstChoosingSeat.map((choosingSeat, index) => {
+            return <tr key={index}>
+                <th scope='row'>{choosingSeat.soGhe}</th>
+                <td>{choosingSeat.gia.toLocaleString()}</td>
+                <td><button className='btn btn-danger' onClick={() => {
+                    this.props.dispatch(cancelSeatAction(choosingSeat.soGhe))
+                }}>Cancel</button></td>
+            </tr>
+        })
+    }
+
+    renderTotalPrice = () => {
+        return <tfoot>
+            <tr>
+                <td>
+                    <h3>Total price</h3>
+                </td>
+                <td>
+                    {this.props.lstChoosingSeat.reduce((total, seat, index) => {
+                        return total += seat.gia;
+                    }, 0).toLocaleString()}
+                </td>
+                <td>
+                    <button className='btn btn-danger' onClick={() => {
+                        this.props.lstChoosingSeat.map((choosingSeat, index) => {
+                            return this.props.dispatch(cancelSeatAction(choosingSeat.soGhe))
+                        })
+                    }}><i className="fa fa-times"></i></button>
+                </td>
+            </tr>
+        </tfoot>
+    }
+
     render() {
         return (
             <div>
@@ -23,17 +60,9 @@ export default class ReservationInfo extends Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className>
-                                        <th scope='row'>R1C1</th>
-                                        <td>R1C2</td>
-                                        <td>R1C3</td>
-                                    </tr>
-                                    <tr className>
-                                        <th scope='row'>Item</th>
-                                        <td>Item</td>
-                                        <td>Item</td>
-                                    </tr>
+                                    {this.renderReservationInfo()}
                                 </tbody>
+                                {this.renderTotalPrice()}
                             </table>
                         </div>
                     </div>
@@ -42,3 +71,13 @@ export default class ReservationInfo extends Component {
         )
     }
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        lstChoosingSeat: state.BookingTicketReducer.lstChoosingSeat
+    }
+}
+
+
+export default connect(mapStateToProps)(ReservationInfo)
